@@ -17,6 +17,26 @@
   </a>
 </p>
 
+## 分支后更新日志   
+118代表基于myliang/x-spreadsheet 1.1.8版本的分支代码    
+* 118.0.2   
+1. 样式x-spreadsheet中background修改为transparent（透明色），如果需要自定义底色可以在外面包一层div里设置背景色。   
+2. 初始化参数row里增加属性eoctdmIndexHeigth:int，控制表头的高度，≤0表示隐藏。   
+3. 初始化参数增加属性eoctdmSelectedByRead:string，当mode为read，eoctdmSelectedByRead为off时，鼠标点击单元格后不显示选中框。   
+4. 解决当表头和内容的高度不一样时，右边竖滚动条的顶部位置与内容顶部没对齐的问题。   
+5. 初始化参数增加属性eoctdmGridStrokeStyle:string，在showGrid为true时设置网格样式，比如颜色值。   
+6. 解决表格父节点字体设置为白色时，单元格输入框的字体色与底色相同表现出看不到内容的问题。    
+7. 初始化参数增加属性eoctdmFormulas:array，用于加载用户自定义函数代码，示例代码如下：   
+```javascript
+eoctdmFormulas:[{
+  key: 'TEST01', //仅支持全大写字母和数字
+  title: '自定义函数',
+  render: ary => JSON.stringify(ary)
+}]
+```   
+8. 优化formula公式规则：1）入参无直接显示0，入参1个直接显示入参内容，入参≥2个时才交付formula的render执行；2）入参引入单元格（如a10）时如果值为数字会自动转换，不为数字原样返回，需要在render中类型判断处理。   
+以上demo详见index.html中示例内容。   
+
 ## Document
 * en
 * [zh-cn 中文](https://hondrytravis.github.io/x-spreadsheet-doc/)

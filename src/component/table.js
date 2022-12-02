@@ -185,6 +185,7 @@ function renderSelectedHeaderCell(x, y, w, h) {
 // tx: moving distance on x-axis
 // ty: moving distance on y-axis
 function renderFixedHeaders(type, viewRange, w, h, tx, ty) {
+  if (w < 1 && h < 1) return;
   const { draw, data } = this;
   const sumHeight = viewRange.h; // rows.sumHeight(viewRange.sri, viewRange.eri + 1);
   const sumWidth = viewRange.w; // cols.sumWidth(viewRange.sci, viewRange.eci + 1);
@@ -248,6 +249,7 @@ function renderFixedHeaders(type, viewRange, w, h, tx, ty) {
 }
 
 function renderFixedLeftTopCell(fw, fh) {
+  if (fw < 1 && fh < 1) return;
   const { draw } = this;
   draw.save();
   // left-top-cell
@@ -261,7 +263,9 @@ function renderContentGrid({
 }, fw, fh, tx, ty) {
   const { draw, data } = this;
   const { settings } = data;
-
+  if (typeof settings.eoctdmGridStrokeStyle === 'string') {
+    Object.assign(tableGridStyle, { strokeStyle: settings.eoctdmGridStrokeStyle });
+  }
   draw.save();
   draw.attr(tableGridStyle)
     .translate(fw + tx, fh + ty);
@@ -318,7 +322,7 @@ class Table {
     // fixed width of header
     const fw = cols.indexWidth;
     // fixed height of header
-    const fh = rows.height;
+    const fh = rows.eoctdmIndexHeigth;
 
     this.draw.resize(data.viewWidth(), data.viewHeight());
     this.clear();

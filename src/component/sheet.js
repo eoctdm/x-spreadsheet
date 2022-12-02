@@ -259,7 +259,7 @@ function verticalScrollbarSet() {
   const { data, verticalScrollbar } = this;
   const { height } = this.getTableOffset();
   const erth = data.exceptRowTotalHeight(0, -1);
-  // console.log('erth:', erth);
+  // console.log('erth:', erth, height);
   verticalScrollbar.set(height, data.rows.totalHeight() - erth);
 }
 
@@ -919,8 +919,12 @@ export default class Sheet {
         this.editor.el,
         this.selector.el,
       );
-    this.overlayerEl = h('div', `${cssPrefix}-overlayer`)
-      .child(this.overlayerCEl);
+    if (data.settings.mode === 'read' && data.settings.eoctdmSelectedByRead === 'off') {
+      this.overlayerEl = h('div', `${cssPrefix}-overlayer`).hide();
+    } else {
+      this.overlayerEl = h('div', `${cssPrefix}-overlayer`)
+        .child(this.overlayerCEl);
+    }
     // sortFilter
     this.sortFilter = new SortFilter();
     // root element
@@ -1003,11 +1007,13 @@ export default class Sheet {
   getTableOffset() {
     const { rows, cols } = this.data;
     const { width, height } = this.getRect();
+    // rows.height修改为rows.eoctdmIndexHeigth
+    // 原来为rows.height,在头部高度与内容高度不一样时滚动条顶部位置与内容不在一个水平线上
     return {
       width: width - cols.indexWidth,
-      height: height - rows.height,
+      height: height - rows.eoctdmIndexHeigth,
       left: cols.indexWidth,
-      top: rows.height,
+      top: rows.eoctdmIndexHeigth,
     };
   }
 }

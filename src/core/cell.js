@@ -123,18 +123,31 @@ const evalSubExpr = (subExpr, cellRender) => {
   const [fl] = subExpr;
   let expr = subExpr;
   if (fl === '"') {
+    // 直接是文本，只支持双引号
     return subExpr.substring(1);
   }
   let ret = 1;
   if (fl === '-') {
+    // 数值正负判定
     expr = subExpr.substring(1);
     ret = -1;
   }
-  if (expr[0] >= '0' && expr[0] <= '9') {
+  const isNumber = value => !isNaN(parseFloat(value)) && isFinite(value);
+  const fc = expr[0];
+  if ((fc >= 'a' && fc <= 'z') || (fc >= 'A' && fc <= 'Z')) {
+    // 引用了单元格判定
+    const [x, y] = expr2xy(expr);
+    const cellValue = cellRender(x, y);
+    if (isNumber(cellValue)) {
+      return ret * Number(cellValue);
+    }
+    return cellValue;
+  }
+  // 非单元格直接处理
+  if (isNumber(expr)) {
     return ret * Number(expr);
   }
-  const [x, y] = expr2xy(expr);
-  return ret * cellRender(x, y);
+  return expr;
 };
 
 // evaluate the suffix expression
@@ -183,12 +196,17 @@ const evalSuffixExpr = (srcStack, formulaMap, cellRender, cellList) => {
       }
       stack.push(ret);
     } else if (Array.isArray(expr)) {
+      // 带2个及以上参数的函数才必须在此处理
       const [formula, len] = expr;
       const params = [];
       for (let j = 0; j < len; j += 1) {
         params.push(stack.pop());
       }
-      stack.push(formulaMap[formula].render(params.reverse()));
+      if (formulaMap[formula] && formulaMap[formula].render) {
+        stack.push(formulaMap[formula].render(params.reverse()));
+      } else {
+        stack.push('invalid formula!');
+      }
     } else {
       if (cellList.includes(expr)) {
         return 0;
@@ -201,6 +219,8 @@ const evalSuffixExpr = (srcStack, formulaMap, cellRender, cellList) => {
     }
     // console.log('stack:', stack);
   }
+  if (typeof stack[0] === 'undefined') return 0;
+  if (typeof stack[0] === 'string' && stack[0].trim().length === 0) return 0;
   return stack[0];
 };
 

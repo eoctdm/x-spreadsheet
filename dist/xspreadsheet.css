@@ -8,7 +8,7 @@ body {
   -moz-user-select: none;
   font-family: 'Lato', 'Source Sans Pro', Roboto, Helvetica, Arial, sans-serif;
   box-sizing: content-box;
-  background: #fff;
+  background: transparent;
   -webkit-font-smoothing: antialiased;
 }
 .x-spreadsheet textarea {
@@ -202,6 +202,9 @@ body {
   width: 1px;
   background: #ddd;
 }
+.x-spreadsheet-scrollbar:hover {
+  opacity: 0.85;
+}
 /* @{css-prefix}-overlayer */
 .x-spreadsheet-overlayer {
   position: absolute;
@@ -287,7 +290,8 @@ body {
   text-align: start;
   overflow-y: hidden;
   font: 400 13px Arial, 'Lato', 'Source Sans Pro', Roboto, Helvetica, sans-serif;
-  color: inherit;
+  color: rgba(0, 0, 0, 0.9);
+  /* 解决父节点设置为白色时与底色相同的问题 color: inherit; */
   white-space: normal;
   word-wrap: break-word;
   line-height: 22px;

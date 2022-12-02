@@ -1,0 +1,14 @@
+npm config set registry https://registry.npm.taobao.org
+git clone https://github.com/eoctdm/x-spreadsheet.git
+cd x-spreadsheet
+npm install --legacy-peer-deps
+npm run dev
+npm run build
+npm run build-locale
+npm config set registry https://registry.npmjs.org
+npm config get registry
+npm login
+npm publish
+
+# 删除npm包，后面是版本号
+npm unpublish @eoctdm/x-data-spreadsheet@118.0.1 --force

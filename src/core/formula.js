@@ -88,10 +88,20 @@ baseFormulas.forEach((f) => {
   formulam[f.key] = f;
 });
 
+// 在初始化时增加外部公式
+const putFormulas = (items) => {
+  if (!items) return;
+  items.forEach((item) => {
+    baseFormulas.push(item);
+    formulam[item.key] = item;
+  });
+};
+
 export default {
 };
 
 export {
+  putFormulas,
   formulam,
   formulas,
   baseFormulas,

@@ -5,6 +5,7 @@ import Sheet from './component/sheet';
 import Bottombar from './component/bottombar';
 import { cssPrefix } from './config';
 import { locale } from './locale/locale';
+import { putFormulas } from './core/formula';
 import './index.less';
 
 
@@ -16,6 +17,9 @@ class Spreadsheet {
     this.datas = [];
     if (typeof selectors === 'string') {
       targetEl = document.querySelector(selectors);
+    }
+    if (this.options.eoctdmFormulas) {
+      putFormulas(this.options.eoctdmFormulas);
     }
     this.bottombar = this.options.showBottomBar ? new Bottombar(() => {
       if (this.options.mode === 'read') return;

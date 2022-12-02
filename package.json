@@ -1,6 +1,6 @@
 {
-  "name": "x-data-spreadsheet",
-  "version": "1.1.8",
+  "name": "@eoctdm/x-data-spreadsheet",
+  "version": "118.0.2",
   "description": "a javascript xpreadsheet",
   "types": "src/index.d.ts",
   "main": "src/index.js",
@@ -9,11 +9,11 @@
     "dist",
     "src"
   ],
-  "author": "myliang <liangyuliang0335@gmail.com>",
+  "author": "eoctdm <cnlottery@qq.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/myliang/x-spreadsheet.git"
+    "url": "https://github.com/eoctdm/x-spreadsheet.git"
   },
   "nyc": {
     "all": true,
@@ -71,5 +71,9 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/x-spreadsheet"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
