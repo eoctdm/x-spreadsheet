@@ -114,7 +114,9 @@ export default class Toolbar {
       [
         this.undoEl = new Undo(),
         this.redoEl = new Redo(),
+				/* eoctdm remove print
         new Print(),
+				*/
         this.paintformatEl = new Paintformat(),
         this.clearformatEl = new Clearformat(),
       ],

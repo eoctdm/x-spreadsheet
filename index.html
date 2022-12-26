@@ -19,7 +19,9 @@
     <span  onclick="fn_mode_edit()" style="cursor: pointer;">修改模式</span>
     <span  onclick="fn_mode_read()" style="margin-left: 2em;cursor: pointer;">预览模式</span>
   </div>
-  <div style="width: 1000px;height: 400px;overflow: hidden;" id="x-spreadsheet-demo"></div>
+  <div style="width: 900px;height: 400px;overflow: hidden;" id="x-spreadsheet-demo"
+			@contextmenu.stop="null" @mousedown.stop="null"
+			@touchstart.stop="null" @touchend.stop="null"></div>
   <script>
     const rows10 = { len: 1000 };
     for (let i = 0; i < 1000; i += 1) {
@@ -68,6 +70,14 @@
           width: () => 1000,
           height: () => 400,
         },
+				row: {
+					heigth: 55,
+					//eoctdmIndexHeigth: 55,
+				},
+				col: {
+					width: 100,
+					//indexWidth: 160,
+				},
         style: {
           bgcolor: "transparent",
           color: "white"
@@ -127,7 +137,7 @@
           },
           eoctdmSelectedByRead: 'off',
           row: {
-            eoctdmIndexHeigth: 80,
+            eoctdmIndexHeigth: 55,
           },
           col: {
             width: 100,

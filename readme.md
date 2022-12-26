@@ -19,6 +19,31 @@
 
 ## 分支后更新日志   
 118代表基于myliang/x-spreadsheet 1.1.8版本的分支代码    
+   
+* todo list   
+1. 集成使用时，单元格不能拖动填充，合并单元格再预览报错。
+2. 在header高度设值为自定义数值eoctdmIndexHeigth后，单元格点击事件位置，在列索引上拖动修改行高度等的位置都要减少eoctdmIndexHeigth。
+3. 头部行和最左侧序号列的背景色自定义设置。
+    
+* 118.0.3
+1. 去掉工具栏中打印按钮，右键菜单打印设置；如需开启，搜索”eoctdm remove print“去掉注释即可。
+2. 单元格的数据text必须为string类型，其他类型在修改时控制台会报错。
+3. 通过以下关键代码设置不要求穿透事件，防止表格包容div层的事件响应。      
+```html
+<div ref="refTableBox" class="table-box"
+		@contextmenu.stop="null" @mousedown.stop="null"
+		@touchstart.stop="null" @touchend.stop="null"></div>
+```   
+3. vue中使用关键代码。      
+```javascript
+import Spreadsheet from '@eoctdm/x-data-spreadsheet';
+import zhCN from '@eoctdm/x-data-spreadsheet/src/locale/zh-cn';
+Spreadsheet.locale('zh-cn', zhCN);
+new Spreadsheet(this.$refs.refTableBox).change((data) => {
+	console.error( data)
+});
+```   
+   
 * 118.0.2   
 1. 样式x-spreadsheet中background修改为transparent（透明色），如果需要自定义底色可以在外面包一层div里设置背景色。   
 2. 初始化参数row里增加属性eoctdmIndexHeigth:int，控制表头的高度，≤0表示隐藏。   
@@ -35,7 +60,8 @@ eoctdmFormulas:[{
 }]
 ```   
 8. 优化formula公式规则：1）入参无直接显示0，入参1个直接显示入参内容，入参≥2个时才交付formula的render执行；2）入参引入单元格（如a10）时如果值为数字会自动转换，不为数字原样返回，需要在render中类型判断处理。   
-以上demo详见index.html中示例内容。   
+以上demo详见index.html中示例内容。
+   
 
 ## Document
 * en
